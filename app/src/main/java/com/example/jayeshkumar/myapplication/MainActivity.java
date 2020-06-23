@@ -18,19 +18,22 @@ public class MainActivity extends AppCompatActivity {
     private int size;
     TableLayout mainBoard;
     TextView tv_turn;
+    TextView error;
+    TextView index;
     char [][] board;
     char turn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_board);
+        setContentView(R.layout.activity_main);
 
         size = Integer.parseInt(getString(R.string.size_of_board));
         board = new char [size][size];
         mainBoard = (TableLayout) findViewById(R.id.mainBoard);
         tv_turn = (TextView) findViewById(R.id.turn);
-
+        error = (TextView)findViewById(R.id.error);
+        index = (TextView)findViewById(R.id.index);
         resetBoard();
         tv_turn.setText("Turn: "+turn);
 
@@ -156,8 +159,11 @@ public class MainActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                error.setText("");
                 if(!Cell_Set(r,c)) {
+
+                    index.setText("index: "+r+" "+c);
+
                     board[r][c] = turn;
                     if (turn == 'X') {
                         tv.setText(R.string.X);
@@ -179,8 +185,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    tv_turn.setText(tv_turn.getText()+" Please choose a Cell Which is not already Occupied");
+                    error.setText("Please choose a Cell Which is not already Occupied");
                 }
+
+                // row column
             }
         };
     }
